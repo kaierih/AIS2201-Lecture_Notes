@@ -4,7 +4,7 @@ from .signal_analyzer import SignalAnalyzer
 from .sinewave import SineWaveDemo
 from .phasor import PhasorDemo
 from .vector_sum import VectorSumDemo
-from .frequency_mixing import FrequencyMixingDemo
+from .frequency_mixing import FrequencyMixingDemo, FrequencyMixingSpectrumDemo
 from .aliasing import AliasingDemo, ComplexAlias, AliasingDemo2
 
 __all__ = ["CrossCorrelationDemo",
@@ -14,6 +14,7 @@ __all__ = ["CrossCorrelationDemo",
            "PhasorDemo",
            "VectorSumDemo",
            "FrequencyMixingDemo",
+           "FrequencyMixingSpectrumDemo",
            "AliasingDemo",
            "ComplexAlias",
            "AliasingDemo2"]
