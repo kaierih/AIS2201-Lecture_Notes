@@ -1,0 +1,4 @@
+<svg width="234mm" height="153mm" version="1.1" viewBox="0 0 234 153" xmlns="http://www.w3.org/2000/svg">
+ <g fill="none" stroke-width=".5" stroke="#000"><rect x="32" y="2" width="200" height="135"/><path d="m2 47h22m8 0h-5m0 90h5v5"/><path d="m32 47h60" stroke-dasharray="1 2"/></g>
+ <g stroke="#09f" stroke-width=".5"><path d="m170 137 62 0m-137-90h75m-138 90h63" stroke-width="1"/><path d="m170 134v-85m-75 0v85" stroke-dasharray="3"/><circle cx="95" cy="137" r="3" fill="#fff"/><circle cx="170" cy="137" r="3" fill="#fff"/><circle cx="170" cy="47" r="3" fill="#09f"/><circle cx="95" cy="47" r="3" fill="#09f"/></g>
+ <g font-family="Times" font-size="14px" font-style="italic"><text x="24" y="148">0</text><text x="10" y="43" font-style="normal">1</text><text x="2" y="58">b−a</text><text x="92" y="151">a</text><text x="166" y="151">b</text><text x="226" y="145">x</text><text x="12" y="12">f(x)</text></g></svg>
