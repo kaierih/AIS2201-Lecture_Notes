@@ -64,3 +64,14 @@
 % vim:filetype=tex
 
 \newcommand{\sha}{\bot \!\! \bot \!\! \bot}
+
+\usetikzlibrary{arrows.meta,shapes.geometric,positioning}
+
+\tikzset{
+  >={Stealth[round]},
+  line/.style   ={very thick,-{Stealth}},
+  block/.style  ={draw,rounded corners=6pt,fill=blue!10,very thick,
+                  minimum height=10mm,minimum width=36mm,align=center},
+  decision/.style={diamond,aspect=2,draw,very thick,fill=blue!15,
+                   inner xsep=3mm,inner ysep=2mm,align=center}
+}
