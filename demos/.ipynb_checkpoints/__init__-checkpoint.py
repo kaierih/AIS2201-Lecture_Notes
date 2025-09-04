@@ -6,6 +6,8 @@ from .phasor import PhasorDemo
 from .vector_sum import VectorSumDemo
 from .frequency_mixing import FrequencyMixingDemo, FrequencyMixingSpectrumDemo
 from .aliasing import AliasingDemo, ComplexAlias, AliasingDemo2
+from .dft import DFT_Demo
+from .sinusoid_spectrum import SinusoidSpectrumDemo
 
 __all__ = ["CrossCorrelationDemo",
            "ConvolutionDemo",
@@ -17,4 +19,6 @@ __all__ = ["CrossCorrelationDemo",
            "FrequencyMixingSpectrumDemo",
            "AliasingDemo",
            "ComplexAlias",
-           "AliasingDemo2"]
+           "AliasingDemo2",
+           "DFT_Demo",
+           "SinusoidSpectrumDemo",]
