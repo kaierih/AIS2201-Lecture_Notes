@@ -9,6 +9,7 @@ from .aliasing import AliasingDemo, ComplexAlias, AliasingDemo2
 from .dft import DFT_Demo
 from .sinusoid_spectrum import SinusoidSpectrumDemo
 from .spectral_leakage import SpectralLeakageDemo
+from .dtft import DTFT_Demo
 
 __all__ = ["CrossCorrelationDemo",
            "ConvolutionDemo",
@@ -23,4 +24,5 @@ __all__ = ["CrossCorrelationDemo",
            "AliasingDemo2",
            "DFT_Demo",
            "SinusoidSpectrumDemo",
-           "SpectralLeakageDemo"]
+           "SpectralLeakageDemo",
+           "DTFT_Demo"]
