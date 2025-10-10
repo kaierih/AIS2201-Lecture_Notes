@@ -42,6 +42,8 @@ class ConvolutionDemo:
         self.hn = hn
         self.M = len(hn)
         self.yn = np.convolve(self.hn, self.xn)
+        self.yn_circular = self.yn[:self.L].copy()
+        self.yn_circular[0:self.M-1] += self.yn[self.L:]
         
         plt.close(fig_num)
         self.fig = plt.figure(fig_num, figsize=figsize)
@@ -107,14 +109,14 @@ class ConvolutionDemo:
                                           min=0,
                                           max=self.L+self.M-2,
                                           step = 1,
-                                          description=r'Sample number $n$',
+                                          description='Sample number n:',
                                           disabled=False,
                                           style = {'description_width': 'initial'},
                                           layout=Layout(width='70%'),
                                           continuous_update=True
                                           )
 
-        self.conv_mode = widget.Dropdown(options=['full', 'same', 'valid'],
+        self.conv_mode = widget.Dropdown(options=['full', 'same', 'valid', 'circular'],
                                          value='full',
                                          description='Mode:',
                                          disabled=False,
@@ -129,16 +131,22 @@ class ConvolutionDemo:
         display(self.layout, Output())
         
     def update_n(self, n):
-        n_1 = max(0, n-self.M+1)
-        n_2 = min(self.L, n+1)
-        k_1 = max(0, n-self.L+1)
-        k_2 = min(self.M, n+1)
-        n_array = np.arange(n_1, n_2)
-        #noverlap = min(self.L, n_2-n_1)
-        self.xn_hn.update(n=n_array, xn=self.xn[n_1:n_2]*np.flip(self.hn[k_1:k_2]))
-        self.yn_active.update([n], [self.yn[n]])
-        self.hn_samples.update(np.arange(n-self.M+1, n+1), np.flip(self.hn))
-        
+        if self.conv_mode.value=='circular':
+            n_array = np.arange(n-self.M+1, n+1)%self.L
+            self.xn_hn.update(n=n_array, xn=self.xn[n_array]*np.flip(self.hn[::-1]))
+            self.hn_samples.update(n_array, np.flip(self.hn))
+            self.yn_active.update([n], [self.yn_circular[n]])
+        else:
+            n_1 = max(0, n-self.M+1)
+            n_2 = min(self.L, n+1)
+            k_1 = max(0, n-self.L+1)
+            k_2 = min(self.M, n+1)
+            n_array = np.arange(n_1, n_2)
+            #noverlap = min(self.L, n_2-n_1)
+            self.xn_hn.update(n=n_array, xn=self.xn[n_1:n_2]*np.flip(self.hn[k_1:k_2]))
+            self.yn_active.update([n], [self.yn[n]])
+            self.hn_samples.update(np.arange(n-self.M+1, n+1), np.flip(self.hn))
+            
         self.hn_samples.samples.set_label(r'$h['+str(n)+'-k]$')
         self.hn_samples.ax.legend(loc='upper left')
         self.xn_hn.samples.set_label(r'$x[k]\cdot h['+str(n)+'-k]$')
@@ -148,7 +156,7 @@ class ConvolutionDemo:
         self.update_title(n)
         
     def update_title(self, n):
-        title_str = 'Konvolusjonssum: $y[n] = \\sum_{k=0}^{%d}x[k]\\cdot h[%d - k]$'%(self.L-1, n)
+        title_str = 'Convolution Sum: $y[n] = \\sum_{k=0}^{%d}x[k]\\cdot h[%d - k]$'%(self.L-1, n)
         self.ax1.set_title(title_str)
         
     def update_mode(self, mode):
@@ -161,8 +169,16 @@ class ConvolutionDemo:
         elif mode=='valid':
             self.sample_num.min=self.M-1
             self.sample_num.max=self.L-1
+        elif mode=='circular':
+            self.sample_num.min=0
+            self.sample_num.max=self.L-1
         else:
             raise Exception("Unrecognized Convolution Mode")
+
+        if mode=='circular':
+            self.yn_samples.update(np.arange(self.sample_num.min, self.sample_num.max+1), self.yn_circular)
+        else:
+            self.yn_samples.update(np.arange(self.sample_num.min, self.sample_num.max+1), self.yn[np.arange(self.sample_num.min, self.sample_num.max+1)])
 
         if self.sample_num.value < self.sample_num.min:
             self.sample_num.value = self.sample_num.min
@@ -170,5 +186,5 @@ class ConvolutionDemo:
         elif self.sample_num.value > self.sample_num.max:
             self.sample_num.value = self.sample_num.max
             self.update_n(self.sample_num.value)
-            
-        self.yn_samples.update(np.arange(self.sample_num.min, self.sample_num.max+1), self.yn[np.arange(self.sample_num.min, self.sample_num.max+1)])
+        else:
+            self.update_n(self.sample_num.value)
