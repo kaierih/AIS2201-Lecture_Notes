@@ -42,8 +42,15 @@ class ConvolutionDemo:
         self.hn = hn
         self.M = len(hn)
         self.yn = np.convolve(self.hn, self.xn)
-        self.yn_circular = self.yn[:self.L].copy()
-        self.yn_circular[0:self.M-1] += self.yn[self.L:]
+        if self.L > self.M:
+            self.yn_circular = self.yn[:self.L].copy()
+            self.yn_circular[0:self.M-1] += self.yn[self.L:]
+        elif self.M > self.L:
+            self.yn_circular = self.yn[:self.M].copy()
+            self.yn_circular[0:self.L-1] += self.yn[self.M:]
+        else:
+            self.yn_circular = self.yn[:self.M].copy()
+    
         
         plt.close(fig_num)
         self.fig = plt.figure(fig_num, figsize=figsize)
