@@ -167,7 +167,7 @@ class DTFT_Demo:
         ax = plt.subplot(2,3, (1, 5))
     
      
-        ax.set_title(r"$\sum_{n=0}^{N-1} x[n]\cdot e^{j\hat{\omega}\cdot n}$")
+        ax.set_title(r"$\sum_{n=0}^{N-1} x[n]\cdot e^{-j\hat{\omega}\cdot n}$")
         ax.set_aspect(1)
         self.VectorFig = vectorPlot(ax, A_max = sum(np.absolute(xn)), N = 2, arrowhead_scale = self.N/2)
         
@@ -224,7 +224,7 @@ class DTFT_Demo:
         display(layout, out)
         
     def update(self, omega):
-        vectors = self.xn*np.exp(1j*omega*pi*np.arange(self.N))
+        vectors = self.xn*np.exp(-1j*omega*pi*np.arange(self.N))
         vectorSums = np.array([np.sum(vectors[0:i]) for i in range(self.N+1)])
         x = np.append(np.array([0]), np.real(vectorSums))
         y = np.append(np.array([0]), np.imag(vectorSums))
