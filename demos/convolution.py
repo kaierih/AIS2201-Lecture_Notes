@@ -42,7 +42,7 @@ class ConvolutionDemo:
         self.hn = hn
         self.M = len(hn)
         self.yn = np.convolve(self.hn, self.xn)
-        if self.L > self.M:
+        if self.L >= self.M:
             self.yn_circular = self.yn[:self.L].copy()
             self.yn_circular[0:self.M-1] += self.yn[self.L:]
         elif self.M > self.L:
@@ -82,7 +82,7 @@ class ConvolutionDemo:
         # Plot x[k]*h[n-k]
         ax2 = plt.subplot(3,1,2)
         ax2.grid(True)
-        self.xn_hn = interactiveStem(ax2, [0], [self.hn[0]*self.xn[0]], color='C4', label=r'$x[k]\cdot x[n-k]$', filled=True)
+        self.xn_hn = interactiveStem(ax2, [0], [self.hn[0]*self.xn[0]], color='C4', label='$x[k]\\cdot x[n-k]$', filled=True)
         self.xn_hn.ax.set_xlim([-self.M, self.L+self.M-1])
         self.xn_hn.samples.baseline.set_xdata([-self.M, self.L+self.M])
         self.xn_hn.ax.set_ylim([-max(abs(xn))*max(abs(hn))*1.05, max(abs(xn))*max(abs(hn))*1.05])
@@ -140,7 +140,7 @@ class ConvolutionDemo:
     def update_n(self, n):
         if self.conv_mode.value=='circular':
             n_array = np.arange(n-self.M+1, n+1)%self.L
-            self.xn_hn.update(n=n_array, xn=self.xn[n_array]*np.flip(self.hn[::-1]))
+            self.xn_hn.update(n=n_array, xn=self.xn[n_array]*np.flip(self.hn))
             self.hn_samples.update(n_array, np.flip(self.hn))
             self.yn_active.update([n], [self.yn_circular[n]])
         else:
@@ -156,7 +156,7 @@ class ConvolutionDemo:
             
         self.hn_samples.samples.set_label(r'$h['+str(n)+'-k]$')
         self.hn_samples.ax.legend(loc='upper left')
-        self.xn_hn.samples.set_label(r'$x[k]\cdot h['+str(n)+'-k]$')
+        self.xn_hn.samples.set_label('$x[k]\\cdot h['+str(n)+'-k]$')
         self.xn_hn.ax.legend(loc='upper left')
         self.yn_active.samples.set_label(r'$y['+str(n)+']$')
         self.yn_active.ax.legend(loc='upper left')
