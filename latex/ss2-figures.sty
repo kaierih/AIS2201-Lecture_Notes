@@ -1,0 +1,94 @@
+% Shared TikZ settings for the AIS2201 lecture figures.
+% Originally based on the "Signale und Systeme 2" lecture styles.
+%
+% Found by LaTeX through TEXINPUTS, which the first cell of each
+% <chapter>/figures/generate_*.ipynb sets to point at this folder.
+%
+% Options:
+%   transparent  -- do not draw a white background behind each picture
+%                   (default is a white background, so figures stay
+%                   readable in dark-themed editors such as VS Code)
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ss2-figures}
+
+\newif\ifssfig@whitebg
+\ssfig@whitebgtrue
+\DeclareOption{transparent}{\ssfig@whitebgfalse}
+\ProcessOptions\relax
+
+\RequirePackage{tikz}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=newest}
+\RequirePackage{circuitikz}
+
+\usetikzlibrary{shapes}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{patterns}
+\usetikzlibrary{fit}
+\usetikzlibrary{backgrounds}
+
+% ===== white background behind every picture (default) =====
+\ifssfig@whitebg
+\tikzset{
+  background rectangle/.style={fill=white},
+  every picture/.append style={show background rectangle}
+}
+\fi
+
+% ===== tikzstyles for block diagrams, etc. =====
+\tikzstyle{block} = [draw, fill=gray!20, rectangle, minimum height=3em, minimum width=6em]
+\tikzstyle{sum} = [draw, fill=gray!20, circle, node distance=1cm]
+\tikzstyle{mul} = [draw, fill=gray!20, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzset{>=latex} % arrow heads
+
+\tikzstyle{every node}=[font=\small]
+
+% ===== flowchart styles (prefixed "fc" so they don't clash with "block") =====
+\tikzset{
+  fc line/.style     ={very thick,-{Stealth}},
+  fc block/.style    ={draw,rounded corners=6pt,fill=blue!10,very thick,
+                       minimum height=10mm,minimum width=36mm,align=center},
+  fc decision/.style ={diamond,aspect=2,draw,very thick,fill=blue!15,
+                       inner xsep=3mm,inner ysep=2mm,align=center}
+}
+
+% ===== pgfplots =====
+\pgfkeys{%
+/pgfplots/axis style/.code={%
+\pgfkeysalso{/pgfplots/every axis/.append style={#1}}},
+}
+
+\pgfplotsset{
+    mathaxis/.style={
+        axis lines=center,
+        xtick=\empty,
+        ytick=\empty,
+        xlabel style=below,
+        ylabel style=left,
+        % Make sure the origin is shown (http://tex.stackexchange.com/a/91253)
+        before end axis/.code={
+            \addplot [draw=none, forget plot] coordinates {(0,0)};
+        },
+        anchor=origin,
+    },
+    stemaxis/.style={
+        mathaxis,
+        x=.8em,
+        y=6ex,
+        enlarge x limits={abs=1.2em},
+        enlarge y limits={abs=1.2em},
+    }
+}
+
+\tikzstyle{stem}=[ycomb,mark=*,mark size=2\pgflinewidth,color=blue,thick]
+
+\newcommand{\sha}{\bot \!\! \bot \!\! \bot}
+
+\endinput
