@@ -12,6 +12,13 @@
 \usetikzlibrary{decorations.pathreplacing}
 \usetikzlibrary{arrows}
 \usetikzlibrary{patterns}
+\usetikzlibrary{fit}
+\usetikzlibrary{backgrounds}
+
+\tikzset{
+  background rectangle/.style={fill=white},
+  every picture/.append style={show background rectangle}
+}
 
 % ===== tikzstyles for block diagrams, etc. =====
 \tikzstyle{block} = [draw, fill=gray!20, rectangle, minimum height=3em, minimum width=6em]
